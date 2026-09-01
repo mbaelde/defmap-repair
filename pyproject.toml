@@ -1,0 +1,23 @@
+[project]
+name = "defmap-repair"
+version = "0.1.0"
+description = "Diagnosing and repairing Def-MAP, the real-time source separation method of Baelde (2019, ch. 3)"
+requires-python = ">=3.12"
+dependencies = [
+    "numpy>=1.26",
+    # the thesis implementation itself, so the baselines run from the reference
+    # code rather than a copy of it
+    "gasm @ git+https://github.com/mbaelde/generative-audio-source-models.git#subdirectory=python",
+    "musdb>=0.4",
+    "soundfile>=0.12",
+]
+
+[dependency-groups]
+dev = ["mypy>=1.10"]
+# its own group and not `dev`: `uv run` installs `dev` by default, so matplotlib
+# in it would be downloaded into every fresh experiment container for nothing
+figures = ["matplotlib>=3.8"]
+
+[tool.mypy]
+strict = true
+files = ["experiments"]
